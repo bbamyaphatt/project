@@ -132,4 +132,33 @@ theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 I installed `ggplot2` for visualization with `ggplot`, and `forcats` to reorder charts by their height using `fct_reorder`.
 After calculating the average purchase amount for each product category, I generated a bar chart to facilitate easier comprehension.
+
 ![Consumer behavior](https://raw.githubusercontent.com/bbamyaphatt/project/main/images/Average%20purchase%20amount%20by%20category.jpeg)
+
+According to the bar chart, the Software & Apps category has the highest purchase amount, at $316, while Arts & Crafts has the lowest, at $221.
+
+
+**3. Which product category has the highest total sales volume? What is the proportion of total sales contributed by each category, and how does marital status influence purchasing within these top categories?**
+```r
+# convert datatype
+df$marital_status = as.factor(df$marital_status)
+
+total_sales_cate <- df %>%
+  select(purchase_category, purchase_amount, marital_status) %>%
+  group_by(purchase_category, marital_status) %>%
+  summarize(total_sales = sum(purchase_amount), .groups = "drop") %>%
+  group_by(purchase_category) %>%
+  mutate(cate_total_sales = sum(total_sales)) %>%
+  ungroup() %>%
+  mutate(purchase_category = fct_reorder(purchase_category, cate_total_sales, .desc=TRUE)) %>%
+  arrange(desc(total_sales))
+```
+
+To answer this question, a stacked bar chart is suitable as it allows for visualizing the total sales volume per product category while also showing the breakdown by marital status. The first `group_by(purchase_category, marital_status)` operation calculates the `total_sales` for each unique combination of product category and marital status. This tells R to sum the purchase amounts for each segment e.g. 'Software & Apps' purchased by 'Married' individuals, 'Software & Apps' purchased by 'Single' individuals, and so-on. Then, the `.groups = "drop"` removes the grouping, preparing the data for the next step. Following this, the data is grouped again, but only by `purchase_category`, to calculate the `cate_total_sales`, which represents the sum of all sales within each product category. Finally, the categories are reordered by their `cate_total_sales` in descending order to easily identify the highest-selling categories.
+
+
+
+
+
+
+
