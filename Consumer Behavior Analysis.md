@@ -1,4 +1,5 @@
 # Ecommerce Consumer Behavior Analysis Data
+got this dataset from: [Ecommerce Consumer Behavior Analysis Data](https://www.kaggle.com/datasets/salahuddinahmedshuvo/ecommerce-consumer-behavior-analysis-data)
 
 ## Install package
 ```r
@@ -96,8 +97,8 @@ we need to create crosstab first to find the observed frequency. The crosstab re
 among the high income group, 255 people use discounts while 260 do not. Among the middle income group, 266 people use discounts while 219 do not.
 
 We set the assumptions:
-- H0 = There is NO significant association between the two variables.
-- H1 = there is significant association between the two variables.
+- H0: There is NO significant association between the two variables.
+- H1: there is significant association between the two variables.
   
 According to the chi-square test, the p-value is 0.1046 (> 0.5), which means there'is no statistically significant difference between two groups -- so we fail to reject H0.
 
@@ -210,7 +211,7 @@ Last is Punta Gorda, with $820 in sales. Based on this, we should consider about
 ```r
 plot_payment <- df %>%
   select(purchase_channel, payment_method) %>%
-  group_by(purchase_channel, payment_method) %>%
+  group_by(payment_method, purchase_channel) %>%
   summarise(count = n(), .groups = "drop") %>%
   group_by(payment_method) %>%
   mutate(payment_total_count = sum(count)) %>%
@@ -231,12 +232,39 @@ payment_met <- ggplot(data = plot_payment,
                                'gold'))
 ```
 
+![Most used payment method](https://raw.githubusercontent.com/bbamyaphatt/project/main/images/Distribution%20of%20payment%20method.jpeg)
 
+'PayPal' is indeed the most frequently used payment method, with the highest total count across all purchase channels. This is followed by 'Other' methods, 'Debit Card', 'Credit Card', and 'Cash' being the least popular. 
 
+Across all payment methods, the distribution of purchase channels remains similar in proportion, so promotions should be tailored to each specific payment method rather than being a one-size-fits-all approach across all channels.
 
+**6. Is there a statistically significant correlation between being a customer loyalty program member and frequency of purchase?**
+```r
+# convert datatype
+df$customer_loyalty_program_member <- as.factor(df$customer_loyalty_program_member)
 
+# t test freq and membership
+t_test_freq <- t.test(frequency_of_purchase ~ customer_loyalty_program_member, data = df)
+```
+To determine if there's a statistically significant difference in the frequency of purchase between customers who are members of the loyalty program and those who are not, a t-test was performed.
 
+The assumptions for the t-test were:
+- H0: There is no significant difference in the frequency of purchase between loyalty program members and non-members.
+- H1: There is a significant difference in the frequency of purchase between loyalty program members and non-members.
 
+The p-value obtained from the t-test is 0.6017. Since this p-value is greater than 0.5, we fail to reject H0. This indicates that the frequency of purchase does not statistically imply whether a customer is registered for the loyalty program.
+```r
+# cal of freq
+des_freq <- df %>%
+  group_by(customer_loyalty_program_member) %>%
+  summarise(avg_freq = mean(frequency_of_purchase),
+            median_freq = median(frequency_of_purchase),
+            SD_freq = sd(frequency_of_purchase))
+```
 
-
+While the t-test tells us if a significant difference exists, it doesn't quantify the magnitude of this difference. Therefore, we calculated descriptive statistics for the purchase frequency for both groups:
+- For non-members: The average frequency of purchase is 7.00, the median is 7, and the standard deviation is 3.13.
+- For members: The average frequency of purchase is 6.89, the median is 7, and the standard deviation is 3.17.
+  
+These very close results for the mean, median, and standard deviation further confirm that there is no statistically significant difference in purchase frequency between customers who are loyalty program members and those who are not.
 
