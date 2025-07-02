@@ -156,6 +156,84 @@ total_sales_cate <- df %>%
 
 To answer this question, a stacked bar chart is suitable as it allows for visualizing the total sales volume per product category while also showing the breakdown by marital status. The first `group_by(purchase_category, marital_status)` operation calculates the `total_sales` for each unique combination of product category and marital status. This tells R to sum the purchase amounts for each segment e.g. 'Software & Apps' purchased by 'Married' individuals, 'Software & Apps' purchased by 'Single' individuals, and so-on. Then, the `.groups = "drop"` removes the grouping, preparing the data for the next step. Following this, the data is grouped again, but only by `purchase_category`, to calculate the `cate_total_sales`, which represents the sum of all sales within each product category. Finally, the categories are reordered by their `cate_total_sales` in descending order to easily identify the highest-selling categories.
 
+```r
+totl_sales_by_cate <- ggplot(data = total_sales_cate,
+       aes(x = purchase_category, 
+           y = total_sales,
+           fill = marital_status)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Total Sales by Category",
+       x = "Purchase Category",
+       y = "Total Sales") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_manual(values = c('lightblue',
+                               'lightgreen',
+                               'gold',
+                               'salmon'))
+```
+![Total sales by category](https://raw.githubusercontent.com/bbamyaphatt/project/main/images/Total%20sales%20by%20category.jpeg)
+
+The chart indicates that 'Jewelry & Accessories' has the highest total sales, followed by 'Sports & Outdoors', 'Electronics' and 'Software & Apps'. On the other hand, 'Arts & Crafts' appears to have the lowest total sales among the categories presented. Looking at sales by marital status, we see that:
+- **Widowed customers** purchase a lot of things, especially big items like 'Jewelry & Accessories', 'Electronics', and 'Home Appliances'. They also spend a lot on 'Toys & Games' and 'Health Care'.
+- **Single customers** purchase a lot of 'Software & Apps', 'Books', and 'Health Supplements' – things for personal growth. They also purchase 'Mobile Accessories' and 'Animal Feed'.
+- **Married customers** tend to purchase 'Sports & Outdoors' gear, 'Electronics', and 'Food & Beverages', suggesting purchases often family activities and household things.
+- **Divorced customers** purchase the least overall, but they show up more in 'Jewelry & Accessories', 'Toys & Games', and 'Mobile Accessories'.
+
+The propotion of 'Jewelry & Accessories', which is the highest total sales, is 5.50%
+``` r
+# proportion
+top_total_sales <- df %>%
+  select(purchase_category, purchase_amount) %>%
+  group_by(purchase_category) %>%
+  summarise(top_total_amount = sum(purchase_amount)) %>%
+  arrange(desc(top_total_amount)) %>%
+  head(1)
+
+total_sales <- sum(df$purchase_amount)
+
+jewel_proportion <- (top_total_sales$top_total_amount/total_sales)*100
+```
+**4. Which Top 3 locations contribute the highest total purchase amount?**
+```r
+sales_by_location <- df %>%
+  select(location, purchase_amount) %>%
+  group_by(location) %>%
+  summarise(total_sales_location = sum(purchase_amount) %>%
+  arrange(desc(total_sales_location)) %>%
+  head(3)
+```
+The result shows that Göteborg had the most sales, bringing in $1,161. Next is Oslo, with sales of $1,022.
+Last is Punta Gorda, with $820 in sales. Based on this, we should consider about running special deals to get more customers to buy from the shop.
+
+**5. What are the most frequently used payment methods overall, and how do their distributions differ between 'Online' and 'In-Store' purchase channels?**
+```r
+plot_payment <- df %>%
+  select(purchase_channel, payment_method) %>%
+  group_by(purchase_channel, payment_method) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  group_by(payment_method) %>%
+  mutate(payment_total_count = sum(count)) %>%
+  ungroup() %>%
+  mutate(payment_method = fct_reorder(payment_method, payment_total_count, .desc = TRUE))
+
+payment_met <- ggplot(data = plot_payment,
+       aes(x = payment_method,
+           y = payment_total_count,
+           fill = purchase_channel)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Distribution of Payment Method between Online and In-store",
+       x = "Payment Method",
+       y = "Count of Purchase Channel") +
+  theme_minimal() +
+  scale_fill_manual(values = c('lightblue',
+                               'lightgreen',
+                               'gold'))
+```
+
+
+
+
 
 
 
