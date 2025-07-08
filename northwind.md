@@ -145,6 +145,7 @@ GROUP BY category_id, category_name, product_id, product_name, supplier_id, supp
 ORDER BY total_revenue
 LIMIT 5;
 ```
+![Low Sales Product](https://raw.githubusercontent.com/bbamyaphatt/project/main/images/Low%20Sales%20Products%20in%202023.png)
 
 
 
