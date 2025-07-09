@@ -1,4 +1,5 @@
-The Northwind-SQLite3 dataset is a re-engineered version of the classic Microsoft Access 2000 Northwind database, converted to SQLite3 by [Northwind-SQLite3](https://github.com/jpwhite3/northwind-SQLite3?tab=readme-ov-file). The Northwind dataset is a simulated business scenario database. It tracks all the sales activity for "Northwind Traders," a made-up company that buys and sells specialty foods globally.  It contains information about Customer, Products, Categories, Orders, Orderdetails, Employees, Suppliers and Shippers.
+# Business Performance Analysis
+I use the Northwind dataset for this project and developing my SQL skill. The Northwind-SQLite3 dataset is a re-engineered version of the classic Microsoft Access 2000 Northwind database, converted to SQLite3 by [Northwind-SQLite3](https://github.com/jpwhite3/northwind-SQLite3?tab=readme-ov-file). The Northwind dataset is a simulated business scenario database. It tracks all the sales activity for "Northwind Traders," a made-up company that buys and sells specialty foods globally.  It contains information about Customer, Products, Categories, Orders, Orderdetails, Employees, Suppliers and Shippers.
 
 ## Key Questions
 ### Sales Performance
