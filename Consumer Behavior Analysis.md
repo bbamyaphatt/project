@@ -100,7 +100,7 @@ We set the assumptions:
 - H0: There is NO significant association between the two variables.
 - H1: there is significant association between the two variables.
   
-According to the chi-square test, the p-value is 0.1046 (> 0.5), which means there'is no statistically significant difference between two groups -- so we fail to reject H0.
+According to the chi-square test, the p-value is 0.1046 (> 0.5), which means there's no statistically significant difference between two groups -- so we fail to reject H0.
 
 Based on the statistical results from our current data, a universal discount strategy appears effective, 
 as there's no statistically significant need to tailor discounts to specific income levels.
