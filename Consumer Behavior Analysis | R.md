@@ -60,7 +60,7 @@ Before diving into the insight, I changed the columns name into lowercase for re
 
 Now we're ready to go to the question part
 
-## Key Question
+## Key Questions
 **1. How does customer spending vary across different income level segments,
    and is there a statistically significant relationship between income level and the discount used?**
    ```r
