@@ -27,8 +27,8 @@ test_group.info()
 Both the control and test groups have a data structure consisting of 30 rows and 10 columns, which include:
 - **Campaign Name (object):** The name of the campaign
 - **Date (object):** Date of the record
-- **Spend:** Amount spent on the campaign in dollars
-- **of Impressions:** Number of impressions the ad crossed through the campaign
+- **Spend (int64):** Amount spent on the campaign in dollars
+- **of Impressions (float64):** Number of impressions the ad crossed through the campaign
 - **Reach (float64):** The number of unique impressions received in the ad
 - **of Website Clicks (float64):** Number of website clicks received through the ads
 - **of Searches (float64):** Number of users who performed searches on the website
@@ -50,7 +50,7 @@ The date type turned to `datetime64[ns]`.
 
 Next, I plotted box plots to see if the data is normally or skewed distributed, 
 so I can decide whether the mean or median should be used for imputation. 
-I selected three columns to observe the trend: mpressions, Reach and Website Clicks.
+I selected three columns to observe the trend: Impressions, Reach and Website Clicks.
 ```py
 control_group[['# of Impressions','Reach','# of Website Clicks']].plot(kind='box');
 ```
