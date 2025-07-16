@@ -156,7 +156,7 @@ def ab_test(total_control_click, total_control_impression,
 ```
 
 The function aims to compare Click-Through Rates (CTRs) between two groups, using their total clicks and impressions. 
-The signigicant_level is set to 0.05, representing a 95% confidence level.
+The `signigicant_level` is set to 0.05, representing a 95% confidence level.
 
 ```py
     # calculate conversion rate
@@ -169,7 +169,7 @@ The signigicant_level is set to 0.05, representing a 95% confidence level.
 ```
 
 First, we calculate each group's individual CTR using the formula `clicks / impressions`. 
-These rates are essential for later determining the absolute difference, which means how much one CTR directly differs from the other, and the relative difference, which means
+These rates are essential for later determining the absolute difference (`absolute_diff`), which means how much one CTR directly differs from the other, and the relative difference (`relative_diff`), which means
 the percentage change of the test group's CTR compared to the control.
 
 ```py
@@ -193,7 +193,7 @@ When conducting a hypothesis test for the difference between two proportions, we
 We use a Z-score to measure the difference in CTRs. 
 It shows how far our result is from zero (no difference), using a standard statistical method for comparing rates.
 
-Next, we find the p-value using a two-tailed test. This is because we want to detect if the test CTR is significantly different from the control CTR in either direction, higher or lower
+Next, we find the p-value using a two-tailed test. This is because we want to detect if the test CTR is significantly different from the control CTR in either direction, higher or lower.
 
 ```py
    # calculate individual se for ci
